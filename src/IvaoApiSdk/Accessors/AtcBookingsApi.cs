@@ -14,7 +14,7 @@ internal class AtcBookingsApi(
     ILogger<AtcBookingsApi> logger,
     IOptions<IvaoApiConfig> options,
     HttpClient client
-) : IAtcBookingsApi
+) : BaseAccessor(logger), IAtcBookingsApi
 {
     public async Task<ICollection<BookingResponseDto>?> GetDailyAtcSchedules(
         string? icaoFilter = null,
@@ -23,33 +23,14 @@ internal class AtcBookingsApi(
     {
         const string route = @"v2/atc/bookings/daily";
 
-        logger.LogDebug("Calling {route}", route);
+        var data = await RunApiCall<List<BookingResponseDto>>(() =>
+                client
+                //.AddToken(await authenticator.GetToken(cancellation))
+                .AddApiKey(options.Value)
+                .GetAsync(date is not null ? $"{route}?date={date:yyyy-M-d}" : route, cancellation),
+               route,
+               cancellation);
 
-        var response = await client
-            //.AddToken(await authenticator.GetToken(cancellation))
-            .AddApiKey(options.Value)
-            .GetAsync(date is not null ? $"{route}?date={date:yyyy-M-d}" : route, cancellation);
-
-        response.EnsureSuccessOrWrap(logger);
-
-        var data = await response.Content.ReadFromJsonAsync<List<BookingResponseDto>>(cancellation);
-        if (data is not null && icaoFilter is not null)
-        {
-            data = data.Where(i =>
-                i.AtcCallsign?.StartsWith(icaoFilter, StringComparison.OrdinalIgnoreCase) ?? false).ToList();
-        }
-
-        logger.LogInformation("Call to {route} ended with status {status}", route, response.StatusCode, data);
         return data;
-
-        //var str = await response.Content.ReadAsStringAsync(cancellation);
-        //logger.LogDebug("Call to {route} ended with status {status}.\n\r{data}", route, response.StatusCode, str);
-        //return null;
-    }
-
-
-    private async Task<T> RunApiCall<T>()
-    {
-
     }
 }
