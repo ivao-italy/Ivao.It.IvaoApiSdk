@@ -10,7 +10,6 @@ namespace Ivao.It.IvaoApiSdk.Accessors;
 internal class AtcBookingsApi(
     IAuthenticator authenticator,
     ILogger<AtcBookingsApi> logger,
-    IOptions<IvaoApiConfig> options,
     HttpClient client
 ) : BaseAccessor(logger), IAtcBookingsApi
 {

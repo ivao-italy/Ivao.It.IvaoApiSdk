@@ -1,7 +1,5 @@
 ﻿using System.Net.Http.Json;
 
-using Ivao.It.IvaoApiSdk.Auth;
-using Ivao.It.IvaoApiSdk.Config;
 using Ivao.It.IvaoApiSdk.Dto;
 using Ivao.It.IvaoApiSdk.Exceptions;
 
@@ -11,20 +9,13 @@ namespace Ivao.It.IvaoApiSdk;
 
 internal static class HttpClientExtensions
 {
-    public static HttpClient AddToken(this HttpClient cl, AuthResponse token)
-    {
-        cl.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-        return cl;
-    }
-
-    public static HttpClient AddApiKey(this HttpClient cl, IvaoApiConfig config)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(config.ApiKey);
-        cl.DefaultRequestHeaders.Add("apiKey", config.ApiKey);
-        return cl;
-    }
-
-
+    /// <summary>
+    /// Checks status, adding loggin, exception wrapping and Gateway Response reading for details from IVAO Api
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="logger"></param>
+    /// <returns></returns>
+    /// <exception cref="IvaoApiException"></exception>
     public static async Task<HttpResponseMessage> EnsureSuccessOrWrap(this HttpResponseMessage message, ILogger logger)
     {
         try

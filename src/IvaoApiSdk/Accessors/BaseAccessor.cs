@@ -9,7 +9,7 @@ internal class BaseAccessor(ILogger logger)
         logger.LogDebug("Calling {route}", route);
 
         var response = await callDelegate.Invoke();
-        response.EnsureSuccessOrWrap(logger);
+        await response.EnsureSuccessOrWrap(logger);
 
         logger.LogInformation("Call to {route} ended with status {status}", route, response.StatusCode);
     }
