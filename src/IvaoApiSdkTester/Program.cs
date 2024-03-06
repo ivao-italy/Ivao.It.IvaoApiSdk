@@ -21,9 +21,14 @@ builder.Configuration
 builder.Services.AddIvaoApi(builder.Configuration);
 
 var app = builder.Build();
+
+
 app.AddCommand("atcnow", async ([FromService] ITrackerApi tracker) => await tracker.GetAtcSummary());
+
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
     => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));
+
+app.AddCommand("fpl-list", async ([FromService] IFlightPlansApi fpls) => await fpls.GetUsersFlightPlans("362802"));
 
 
 app.Run();

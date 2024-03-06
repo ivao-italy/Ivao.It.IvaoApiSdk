@@ -1,5 +1,8 @@
-﻿using Ivao.It.IvaoApiSdk.Auth;
+﻿using System.Net.Http.Json;
+
+using Ivao.It.IvaoApiSdk.Auth;
 using Ivao.It.IvaoApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Dto;
 using Ivao.It.IvaoApiSdk.Exceptions;
 
 using Microsoft.Extensions.Logging;
@@ -22,7 +25,7 @@ internal static class HttpClientExtensions
     }
 
 
-    public static HttpResponseMessage EnsureSuccessOrWrap(this HttpResponseMessage message, ILogger logger)
+    public static async Task<HttpResponseMessage> EnsureSuccessOrWrap(this HttpResponseMessage message, ILogger logger)
     {
         try
         {
@@ -31,8 +34,14 @@ internal static class HttpClientExtensions
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Call to IVAO Api failed");
-            throw new IvaoApiException($"Call to IVAO Api failed with message {message}", e);
+            var body = await message.Content.ReadFromJsonAsync<GatewayResponsesDto>();
+            logger.LogError(e,
+                "Call to IVAO Api failed: {body}\n\rStatus: {status} - {reason}",
+                body!.Message,
+                message.StatusCode,
+                message.ReasonPhrase);
+
+            throw new IvaoApiException($"Call to IVAO Api failed: {body.Message}", e);
         }
     }
 }

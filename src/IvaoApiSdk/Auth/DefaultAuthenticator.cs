@@ -25,7 +25,7 @@ internal class DefaultAuthenticator(
         //Token already existing and valid
         if (LatestResponse is not null && !LatestResponse.Expired)
         {
-            logger.LogInformation("Reusing existing Token");
+            logger.LogInformation("Reusing existing Token\n\r{token}", LatestResponse.AccessToken);
             return LatestResponse;
         }
 
@@ -36,8 +36,8 @@ internal class DefaultAuthenticator(
         var response = await client.PostAsJsonAsync(
             DefaultTokenEndpoint, 
             req,
-            o
-            , cancellation);
+            o, 
+            cancellation);
         
         //request.EnsureSuccessStatusCode(); //TODO Better handling?
         if (response.StatusCode >= HttpStatusCode.BadRequest)
@@ -47,7 +47,7 @@ internal class DefaultAuthenticator(
             throw new InvalidCredentialException();
         }
 
-        LatestResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(cancellation);
+        LatestResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(o, cancellation);
         logger.LogInformation("Got a new Token from IVAO API\n\rFor scopes: {scopes}\n\rwith request:\n\r{request}", 
             req.Scope, 
             response.RequestMessage?.ToString());

@@ -23,7 +23,7 @@ internal class BaseAccessor(ILogger logger)
         logger.LogDebug("Calling {route}", route);
 
         var response = await callDelegate.Invoke();
-        response.EnsureSuccessOrWrap(logger);
+        await response.EnsureSuccessOrWrap(logger);
 
         var data = await response.Content.ReadFromJsonAsync<T>(cancellation);
 

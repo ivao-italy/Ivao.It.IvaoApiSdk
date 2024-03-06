@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Json;
-
-using Ivao.It.IvaoApiSdk.Auth;
+﻿using Ivao.It.IvaoApiSdk.Auth;
 using Ivao.It.IvaoApiSdk.Config;
 using Ivao.It.IvaoApiSdk.Dto;
 
@@ -23,11 +21,10 @@ internal class AtcBookingsApi(
     {
         const string route = @"v2/atc/bookings/daily";
 
-        var data = await RunApiCall<List<BookingResponseDto>>(() =>
-                client
-                //.AddToken(await authenticator.GetToken(cancellation))
-                .AddApiKey(options.Value)
-                .GetAsync(date is not null ? $"{route}?date={date:yyyy-M-d}" : route, cancellation),
+        var data = await RunApiCall<List<BookingResponseDto>>(async () =>
+                await client
+                    .AddToken(await authenticator.GetToken(cancellation))
+                    .GetAsync(date is not null ? $"{route}?date={date:yyyy-M-d}" : route, cancellation),
                route,
                cancellation);
 

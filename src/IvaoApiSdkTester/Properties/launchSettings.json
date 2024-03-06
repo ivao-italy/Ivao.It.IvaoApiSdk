@@ -11,6 +11,10 @@
     "atc-bookings": {
       "commandName": "Project",
       "commandLineArgs": "atc-bookings"
+    },
+    "fpl-list": {
+      "commandName": "Project",
+      "commandLineArgs": "fpl-list"
     }
   }
 }
