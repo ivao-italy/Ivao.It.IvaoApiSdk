@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "atcnow": {
+      "commandName": "Project",
+      "commandLineArgs": "atcnow"
+    },
+    "atc-bookings": {
+      "commandName": "Project",
+      "commandLineArgs": "atc-bookings"
+    }
+  }
+}
