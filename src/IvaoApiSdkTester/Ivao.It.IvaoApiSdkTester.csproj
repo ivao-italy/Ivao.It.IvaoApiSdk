@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Cocona" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ivao.It.ApiSdk\Ivao.It.ApiSdk.csproj" />
+    <ProjectReference Include="..\IvaoApiSdk\Ivao.It.IvaoApiSdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>
