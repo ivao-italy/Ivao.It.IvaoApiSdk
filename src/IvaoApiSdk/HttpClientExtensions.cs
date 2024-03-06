@@ -1,10 +1,10 @@
-﻿using Ivao.It.ApiSdk.Auth;
-using Ivao.It.ApiSdk.Config;
-using Ivao.It.ApiSdk.Exceptions;
+﻿using Ivao.It.IvaoApiSdk.Auth;
+using Ivao.It.IvaoApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Exceptions;
 
 using Microsoft.Extensions.Logging;
 
-namespace Ivao.It.ApiSdk;
+namespace Ivao.It.IvaoApiSdk;
 
 internal static class HttpClientExtensions
 {

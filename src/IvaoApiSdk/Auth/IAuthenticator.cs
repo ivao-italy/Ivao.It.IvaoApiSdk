@@ -1,4 +1,4 @@
-﻿namespace Ivao.It.ApiSdk.Auth;
+﻿namespace Ivao.It.IvaoApiSdk.Auth;
 
 internal interface IAuthenticator
 {

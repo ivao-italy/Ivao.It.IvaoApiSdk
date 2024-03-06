@@ -2,7 +2,7 @@
 
 using Cocona;
 
-using Ivao.It.ApiSdk;
+using Ivao.It.IvaoApiSdk;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

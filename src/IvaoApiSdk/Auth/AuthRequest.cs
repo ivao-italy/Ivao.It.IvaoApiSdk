@@ -1,6 +1,6 @@
-﻿using Ivao.It.ApiSdk.Config;
+﻿using Ivao.It.IvaoApiSdk.Config;
 
-namespace Ivao.It.ApiSdk.Auth;
+namespace Ivao.It.IvaoApiSdk.Auth;
 
 internal class AuthRequest
 {

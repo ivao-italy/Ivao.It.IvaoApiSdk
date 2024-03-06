@@ -1,8 +1,8 @@
-﻿using Ivao.It.ApiSdk.Auth;
+﻿using Ivao.It.IvaoApiSdk.Auth;
 
 using Microsoft.Extensions.Logging;
 
-namespace Ivao.It.ApiSdk.Accessors;
+namespace Ivao.It.IvaoApiSdk.Accessors;
 
 internal class TrackerApi(
     IAuthenticator authenticator,

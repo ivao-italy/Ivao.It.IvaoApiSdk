@@ -1,13 +1,13 @@
 ﻿using System.Net.Http.Json;
 
-using Ivao.It.ApiSdk.Auth;
-using Ivao.It.ApiSdk.Config;
-using Ivao.It.ApiSdk.Dto;
+using Ivao.It.IvaoApiSdk.Auth;
+using Ivao.It.IvaoApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Dto;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Ivao.It.ApiSdk.Accessors;
+namespace Ivao.It.IvaoApiSdk.Accessors;
 
 internal class AtcBookingsApi(
     IAuthenticator authenticator,
@@ -39,7 +39,7 @@ internal class AtcBookingsApi(
                 i.AtcCallsign?.StartsWith(icaoFilter, StringComparison.OrdinalIgnoreCase) ?? false).ToList();
         }
 
-        logger.LogDebug("Call to {route} ended with status {status}", route, response.StatusCode, data);
+        logger.LogInformation("Call to {route} ended with status {status}", route, response.StatusCode, data);
         return data;
 
         //var str = await response.Content.ReadAsStringAsync(cancellation);
@@ -47,4 +47,9 @@ internal class AtcBookingsApi(
         //return null;
     }
 
+
+    private async Task<T> RunApiCall<T>()
+    {
+
+    }
 }

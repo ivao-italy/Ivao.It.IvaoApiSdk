@@ -1,6 +1,6 @@
-﻿using Ivao.It.ApiSdk.Dto;
+﻿using Ivao.It.IvaoApiSdk.Dto;
 
-namespace Ivao.It.ApiSdk;
+namespace Ivao.It.IvaoApiSdk;
 
 /// <summary>
 /// IVAO Atc Bookings

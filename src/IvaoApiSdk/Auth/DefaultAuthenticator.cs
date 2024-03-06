@@ -3,12 +3,12 @@ using System.Net.Http.Json;
 using System.Security.Authentication;
 using System.Text.Json;
 
-using Ivao.It.ApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Config;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Ivao.It.ApiSdk.Auth;
+namespace Ivao.It.IvaoApiSdk.Auth;
 
 internal class DefaultAuthenticator(
     IOptions<IvaoApiConfig> config,

@@ -1,4 +1,4 @@
-﻿namespace Ivao.It.ApiSdk.Config;
+﻿namespace Ivao.It.IvaoApiSdk.Config;
 public class IvaoApiConfig
 {
     public static string SectionName = "IvaoApi";

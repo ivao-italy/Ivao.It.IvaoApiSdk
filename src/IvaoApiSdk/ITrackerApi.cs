@@ -1,4 +1,4 @@
-﻿namespace Ivao.It.ApiSdk;
+﻿namespace Ivao.It.IvaoApiSdk;
 
 public interface ITrackerApi
 {

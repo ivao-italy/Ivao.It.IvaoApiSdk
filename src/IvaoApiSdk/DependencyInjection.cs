@@ -1,14 +1,14 @@
 ﻿using System.Net.Http.Headers;
 
-using Ivao.It.ApiSdk.Accessors;
-using Ivao.It.ApiSdk.Auth;
-using Ivao.It.ApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Accessors;
+using Ivao.It.IvaoApiSdk.Auth;
+using Ivao.It.IvaoApiSdk.Config;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Ivao.It.ApiSdk;
+namespace Ivao.It.IvaoApiSdk;
 
 public static class DependencyInjection
 {

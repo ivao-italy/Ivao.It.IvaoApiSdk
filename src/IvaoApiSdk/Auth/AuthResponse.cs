@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Ivao.It.ApiSdk.Auth;
+namespace Ivao.It.IvaoApiSdk.Auth;
 
 [DebuggerDisplay($"Iss: {{{nameof(Issued)}}} - Exp: {{{nameof(Expired)}}} - {{{nameof(Expired)}}}")]
 internal class AuthResponse

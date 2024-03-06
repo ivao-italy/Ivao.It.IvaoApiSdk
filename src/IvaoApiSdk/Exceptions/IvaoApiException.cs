@@ -1,4 +1,4 @@
-﻿namespace Ivao.It.ApiSdk.Exceptions;
+﻿namespace Ivao.It.IvaoApiSdk.Exceptions;
 
 public class IvaoApiException : Exception
 {

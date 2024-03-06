@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Ivao.It.ApiSdk.Dto;
+namespace Ivao.It.IvaoApiSdk.Dto;
 
 [DebuggerDisplay($"{{{nameof(AtcCallsign)}}} - {{{nameof(StartDate)}}} to {{{nameof(EndDate)}}}")]
-public class BookingResponseDto
+public class BookingResponseDto : IRootDto
 {
     public int Id { get; set; }
     public UserSubQueryDto User { get; set; } = new UserSubQueryDto();
