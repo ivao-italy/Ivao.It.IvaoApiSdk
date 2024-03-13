@@ -1,9 +1,7 @@
 ﻿using Ivao.It.IvaoApiSdk.Auth;
-using Ivao.It.IvaoApiSdk.Config;
 using Ivao.It.IvaoApiSdk.Dto;
 
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Ivao.It.IvaoApiSdk.Accessors;
 

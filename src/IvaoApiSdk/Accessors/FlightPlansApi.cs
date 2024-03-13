@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Ivao.It.IvaoApiSdk.Accessors;
 
+[Obsolete("Not supported")]
 internal class FlightPlansApi(
     IAuthenticator authenticator,
     ILogger<AtcBookingsApi> logger,

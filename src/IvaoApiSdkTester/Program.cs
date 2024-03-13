@@ -3,6 +3,7 @@
 using Cocona;
 
 using Ivao.It.IvaoApiSdk;
+using Ivao.It.IvaoApiSdk.Dto.Tracker;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ app.AddCommand("atcnow", async ([FromService] ITrackerApi tracker) => await trac
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
     => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));
 
-app.AddCommand("fpl-list", async ([FromService] IFlightPlansApi fpls) => await fpls.GetUsersFlightPlans("362802"));
+app.AddCommand("tracker-fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
 
 
 app.Run();

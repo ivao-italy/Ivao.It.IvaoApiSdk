@@ -12,9 +12,9 @@
       "commandName": "Project",
       "commandLineArgs": "atc-bookings"
     },
-    "fpl-list": {
+    "tracker-fpl": {
       "commandName": "Project",
-      "commandLineArgs": "fpl-list"
+      "commandLineArgs": "tracker-fpl"
     }
   }
 }

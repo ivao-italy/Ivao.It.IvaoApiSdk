@@ -1,4 +1,8 @@
-﻿using Ivao.It.IvaoApiSdk.Auth;
+﻿using System.Text;
+
+using Ivao.It.IvaoApiSdk.Auth;
+using Ivao.It.IvaoApiSdk.Dto;
+using Ivao.It.IvaoApiSdk.Dto.Tracker;
 
 using Microsoft.Extensions.Logging;
 
@@ -7,7 +11,8 @@ namespace Ivao.It.IvaoApiSdk.Accessors;
 internal class TrackerApi(
     IAuthenticator authenticator,
     ILogger<TrackerApi> logger,
-    HttpClient client) : ITrackerApi
+    HttpClient client) 
+    : BaseAccessor(logger), ITrackerApi
 {
     public async Task GetAtcSummary(CancellationToken cancellation = default)
     {
@@ -23,5 +28,31 @@ internal class TrackerApi(
         var data = await response.Content.ReadAsStringAsync(cancellation);
 
         logger.LogDebug("Call to {route} ended with status {status}.\n\r{data}", route, response.StatusCode, data);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PaginatedSessionsDto?> GetSessions(
+        string vid,
+        TrackerConnectionType? connectionType = null,
+        string? callsign = null,
+        string? arrivalId = null,
+        string? departureId = null,
+        DateTime? dateFrom = null,
+        DateTime? dateTo = null,
+        int pageNumber = 1,
+        int pageSize = 20,
+        CancellationToken cancellation = default)
+    {
+        const string route = @"v2/tracker/sessions";
+        var withQuery =
+            $@"{route}?userId={vid}&callsign={callsign}&from={dateFrom}&to={dateTo}&connectionType={connectionType}&page={pageNumber}&perPage={pageSize}";
+
+        var data = await RunApiCall<PaginatedSessionsDto>(async () =>
+                await client.AddToken(await authenticator.GetToken(cancellation))
+                    .GetAsync(withQuery, cancellation),
+            route,
+            cancellation);
+
+        return data;
     }
 }
