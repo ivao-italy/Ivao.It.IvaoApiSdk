@@ -32,5 +32,5 @@ public interface ITrackerApi
         int pageSize = 20,
         CancellationToken cancellation = default);
 
-    Task<List<FlightPlanDto>> GetSessionFlightPlans(int sessionId, CancellationToken cancellation = default);
+    Task<List<FlightPlanDto>?> GetSessionFlightPlans(int sessionId, CancellationToken cancellation = default);
 }
