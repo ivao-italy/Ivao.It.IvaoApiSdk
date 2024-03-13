@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Headers;
+using System.Text.Json;
 
 using Ivao.It.IvaoApiSdk.Accessors;
 using Ivao.It.IvaoApiSdk.Auth;
 using Ivao.It.IvaoApiSdk.Config;
+using Ivao.It.IvaoApiSdk.Json;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +26,7 @@ public static class DependencyInjection
             cfg.DefaultRequestHeaders.Accept.Clear();
             cfg.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         };
-
+        
         //Config Auth
         services.AddHttpClient<IAuthenticator, DefaultAuthenticator>(configAction);
         services.TryAddSingleton<IAuthenticator, DefaultAuthenticator>();

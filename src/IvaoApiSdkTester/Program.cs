@@ -29,7 +29,8 @@ app.AddCommand("atcnow", async ([FromService] ITrackerApi tracker) => await trac
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
     => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));
 
-app.AddCommand("tracker-fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
+app.AddCommand("tracker", async ([FromService] ITrackerApi tracker) => await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
+app.AddCommand("tracker-fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionFlightPlans(54989210));
 
 
 app.Run();

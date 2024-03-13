@@ -1,8 +1,11 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
 
 using Ivao.It.IvaoApiSdk.Auth;
 using Ivao.It.IvaoApiSdk.Dto;
 using Ivao.It.IvaoApiSdk.Dto.Tracker;
+using Ivao.It.IvaoApiSdk.Json;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +24,7 @@ internal class TrackerApi(
         logger.LogDebug("Calling {route}", route);
 
         var response = await client
-            .AddToken(await authenticator.GetToken(cancellation))
-            .GetAsync(route, cancellation);
+            .AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation);
 
         //Todo deserialize
         var data = await response.Content.ReadAsStringAsync(cancellation);
@@ -48,9 +50,23 @@ internal class TrackerApi(
             $@"{route}?userId={vid}&callsign={callsign}&from={dateFrom}&to={dateTo}&connectionType={connectionType}&page={pageNumber}&perPage={pageSize}";
 
         var data = await RunApiCall<PaginatedSessionsDto>(async () =>
-                await client.AddToken(await authenticator.GetToken(cancellation))
-                    .GetAsync(withQuery, cancellation),
+                await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(withQuery, cancellation),
             route,
+            cancellation);
+
+        return data;
+    }
+
+    public async Task<List<FlightPlanDto>> GetSessionFlightPlans(int sessionId, CancellationToken cancellation = default)
+    {
+        string route = @$"v2/tracker/sessions/{sessionId}/flightPlans";
+
+        var opt = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Converters = { new BoolConverter() }};
+
+        var data = await RunApiCall<List<FlightPlanDto>>(async () => 
+                    await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
+            route,
+            opt,
             cancellation);
 
         return data;

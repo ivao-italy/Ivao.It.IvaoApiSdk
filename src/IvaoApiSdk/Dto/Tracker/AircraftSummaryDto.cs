@@ -1,4 +1,8 @@
-﻿namespace Ivao.It.IvaoApiSdk.Dto.Tracker;
+﻿using System.Text.Json.Serialization;
+
+using Ivao.It.IvaoApiSdk.Json;
+
+namespace Ivao.It.IvaoApiSdk.Dto.Tracker;
 
 public class AircraftSummaryDto
 {
