@@ -23,6 +23,10 @@
     "tracker-tracks": {
       "commandName": "Project",
       "commandLineArgs": "tracker-tracks"
+    },
+    "atcnow-multi": {
+      "commandName": "Project",
+      "commandLineArgs": "atcnow-multi"
     }
   }
 }

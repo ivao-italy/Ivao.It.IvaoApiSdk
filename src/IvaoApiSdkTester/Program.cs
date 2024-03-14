@@ -25,6 +25,14 @@ var app = builder.Build();
 
 
 app.AddCommand("atcnow", async ([FromService] ITrackerApi tracker) => await tracker.GetAtcSummary());
+app.AddCommand("atcnow-multi", async ([FromService] ITrackerApi tracker) =>
+{
+    await tracker.GetAtcSummary();
+    await Task.Delay(500);
+    await tracker.GetAtcSummary();
+    await Task.Delay(500);
+    await tracker.GetAtcSummary();
+});
 
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
     => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));

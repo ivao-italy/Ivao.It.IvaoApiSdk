@@ -25,7 +25,7 @@ internal class DefaultAuthenticator(
         //Token already existing and valid
         if (LatestResponse is not null && !LatestResponse.Expired)
         {
-            logger.LogInformation("Reusing existing Token\n\r{token}", LatestResponse.AccessToken);
+            logger.LogInformation("Reusing existing Token");
             return LatestResponse;
         }
 

@@ -10,6 +10,4 @@ internal class AuthResponse
     public int ExpiresIn { get; set; }
     public DateTime Issued { get; } = DateTime.UtcNow;
     public bool Expired => DateTime.UtcNow >= Issued.AddSeconds(ExpiresIn);
-
-    public override string ToString() => AccessToken;
 }
