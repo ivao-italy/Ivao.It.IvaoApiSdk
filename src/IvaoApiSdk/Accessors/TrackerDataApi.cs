@@ -19,7 +19,9 @@ internal class TrackerApi(
         const string route = @"v2/tracker/now/atc/summary";
 
         await RunApiCall<List<FlightPlanDto>>(async () =>
-                await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
+                await client
+                    .AddToken(await authenticator.GetToken(cancellation))
+                    .GetAsync(route, cancellation),
             route,
             cancellation);
     }
@@ -55,7 +57,9 @@ internal class TrackerApi(
         var opt = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Converters = { new BoolConverter() } };
 
         var data = await RunApiCall<List<FlightPlanDto>>(async () =>
-                    await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
+                    await client
+                        .AddToken(await authenticator.GetToken(cancellation))
+                        .GetAsync(route, cancellation),
             route,
             opt,
             cancellation);
@@ -69,7 +73,9 @@ internal class TrackerApi(
         var opt = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Converters = { new BoolConverter() } };
 
         var data = await RunApiCall<List<PilotTrackDto>>(async () =>
-                await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
+                await client
+                    .AddToken(await authenticator.GetToken(cancellation))
+                    .GetAsync(route, cancellation),
             route,
             opt,
             cancellation);
