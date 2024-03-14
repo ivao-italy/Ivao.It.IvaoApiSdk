@@ -31,6 +31,7 @@ app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulin
 
 app.AddCommand("tracker", async ([FromService] ITrackerApi tracker) => await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
 app.AddCommand("tracker-fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionFlightPlans(54989210));
+app.AddCommand("tracker-tracks", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionTracks(54989210));
 
 
 app.Run();

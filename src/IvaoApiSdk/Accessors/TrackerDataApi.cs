@@ -14,6 +14,7 @@ internal class TrackerApi(
     HttpClient client)
     : BaseAccessor(logger), ITrackerApi
 {
+    [Obsolete("TO be refactored")]
     public async Task GetAtcSummary(CancellationToken cancellation = default)
     {
         const string route = @"v2/tracker/now/atc/summary";
@@ -29,7 +30,6 @@ internal class TrackerApi(
         logger.LogDebug("Call to {route} ended with status {status}.\n\r{data}", route, response.StatusCode, data);
     }
 
-    /// <inheritdoc/>
     public async Task<PaginatedSessionsDto?> GetSessions(
         string vid,
         TrackerConnectionType? connectionType = null,
@@ -62,6 +62,20 @@ internal class TrackerApi(
 
         var data = await RunApiCall<List<FlightPlanDto>>(async () =>
                     await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
+            route,
+            opt,
+            cancellation);
+
+        return data;
+    }
+
+    public async Task<List<PilotTrackDto>?> GetSessionTracks(int sessionId, CancellationToken cancellation = default)
+    {
+        string route = @$"v2/tracker/sessions/{sessionId}/tracks";
+        var opt = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Converters = { new BoolConverter() } };
+
+        var data = await RunApiCall<List<PilotTrackDto>>(async () =>
+                await client.AddToken(await authenticator.GetToken(cancellation)).GetAsync(route, cancellation),
             route,
             opt,
             cancellation);
