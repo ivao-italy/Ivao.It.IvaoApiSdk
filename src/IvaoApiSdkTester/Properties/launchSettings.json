@@ -12,21 +12,25 @@
       "commandName": "Project",
       "commandLineArgs": "atc-bookings"
     },
-    "tracker-fpl": {
-      "commandName": "Project",
-      "commandLineArgs": "tracker-fpl"
-    },
     "tracker": {
       "commandName": "Project",
       "commandLineArgs": "tracker"
     },
-    "tracker-tracks": {
-      "commandName": "Project",
-      "commandLineArgs": "tracker-tracks"
-    },
     "atcnow-multi": {
       "commandName": "Project",
       "commandLineArgs": "atcnow-multi"
+    },
+    "tracker full": {
+      "commandName": "Project",
+      "commandLineArgs": "tracker full"
+    },
+    "tracker tracks": {
+      "commandName": "Project",
+      "commandLineArgs": "tracker tracks"
+    },
+    "tracker fpl": {
+      "commandName": "Project",
+      "commandLineArgs": "tracker fpl"
     }
   }
 }

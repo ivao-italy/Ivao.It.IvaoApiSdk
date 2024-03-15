@@ -6,6 +6,12 @@ public class FlightPlanDto
 {
     public int Id { get; set; }
     public int SessionId { get; set; }
+    /// <summary>
+    /// It may be null if FPL has been got by <see cref="ITrackerApi.GetSessionFlightPlans"/><br/>
+    /// Callsign is stored in session data, then a tracker FPL does not contain it.<br/>
+    /// Btw SDK adds the proper callsign to FPLS when calling <see cref="ITrackerApi.GetFullSessionData"/>
+    /// </summary>
+    public string? Callsign { get; set; }
     public int Revision { get; set; }
     public string AircraftId { get; set; } = null!;
     public int AircraftNumber { get; set; }

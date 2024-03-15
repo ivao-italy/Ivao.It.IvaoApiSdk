@@ -4,8 +4,10 @@ using Cocona;
 
 using Ivao.It.IvaoApiSdk;
 using Ivao.It.IvaoApiSdk.Dto.Tracker;
+using Ivao.It.IvaoApiSdkTester;
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 var builder = CoconaApp.CreateBuilder();
@@ -20,6 +22,7 @@ builder.Configuration
     .AddUserSecrets(Assembly.GetExecutingAssembly());
 
 builder.Services.AddIvaoApi(builder.Configuration);
+builder.Services.AddTransient<ITimedRunner, TimedRunner>();
 
 var app = builder.Build();
 
@@ -37,10 +40,23 @@ app.AddCommand("atcnow-multi", async ([FromService] ITrackerApi tracker) =>
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
     => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));
 
-app.AddCommand("tracker", async ([FromService] ITrackerApi tracker) => await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
-app.AddCommand("tracker-fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionFlightPlans(54989210));
-app.AddCommand("tracker-tracks", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionTracks(54989210));
+app.AddSubCommand("tracker", a =>
+{
+    a.AddCommand(async ([FromService] ITrackerApi tracker) =>
+        await tracker.GetSessions("362802", TrackerConnectionType.Pilot, pageNumber: 1, pageSize: 5));
 
+    a.AddCommand("fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionFlightPlans(54989210));
+    a.AddCommand("tracks", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionTracks(54989210));
+    
+    a.AddCommand("full", async ([FromService] ITrackerApi tracker, [FromService] ITimedRunner runner) =>
+    {
+        await runner
+            .SetLabel("Full Tracker Data")
+            .SetLevel(LogLevel.Warning)
+            //.Run(async () => await tracker.GetFullSessionData(55007150)); //Emi BLQ-VLC
+            .Run(async () => await tracker.GetFullSessionData(55006106)); //Pascu LHR-FCO
+    });
+});
 
 app.Run();
 

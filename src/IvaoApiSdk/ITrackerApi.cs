@@ -33,6 +33,14 @@ public interface ITrackerApi
         CancellationToken cancellation = default);
 
     /// <summary>
+    /// Gets a session by ID
+    /// </summary>
+    /// <param name="sessionId"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    Task<BaseSessionDto?> GetSession(int sessionId, CancellationToken cancellation = default);
+    
+    /// <summary>
     /// Gets all the flightplans for a session
     /// </summary>
     /// <param name="sessionId"></param>
@@ -47,4 +55,14 @@ public interface ITrackerApi
     /// <param name="cancellation"></param>
     /// <returns></returns>
     Task<List<PilotTrackDto>?> GetSessionTracks(int sessionId, CancellationToken cancellation = default);
+
+    /// <summary>
+    /// Gets all the session data. Calls:<br/> 
+    /// <see cref="GetSessionFlightPlans"/><br/>
+    /// <see cref="GetSessionTracks"/><br/>
+    /// </summary>
+    /// <param name="sessionId"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    Task<SessionDto?> GetFullSessionData(int sessionId, CancellationToken cancellation = default);
 }
