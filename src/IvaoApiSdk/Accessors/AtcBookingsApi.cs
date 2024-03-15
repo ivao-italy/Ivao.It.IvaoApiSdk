@@ -1,5 +1,8 @@
-﻿using Ivao.It.IvaoApiSdk.Auth;
+﻿using System.Text.Json;
+
+using Ivao.It.IvaoApiSdk.Auth;
 using Ivao.It.IvaoApiSdk.Dto;
+using Ivao.It.IvaoApiSdk.Json;
 
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +14,12 @@ internal class AtcBookingsApi(
     HttpClient client
 ) : BaseAccessor(logger), IAtcBookingsApi
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new BoolConverter() }
+    };
+
     public async Task<ICollection<BookingResponseDto>?> GetDailyAtcSchedules(
         string? icaoFilter = null,
         DateTime? date = null,
@@ -23,7 +32,15 @@ internal class AtcBookingsApi(
                     .AddToken(await authenticator.GetToken(cancellation))
                     .GetAsync(date is not null ? $"{route}?date={date:yyyy-M-d}" : route, cancellation),
                route,
+               JsonOptions,
                cancellation);
+
+        if (icaoFilter is not null)
+        {
+            data = data?
+                .Where(d => d.AtcPosition?.StartsWith(icaoFilter, StringComparison.OrdinalIgnoreCase) ?? false)
+                .ToList();
+        }
 
         return data;
     }

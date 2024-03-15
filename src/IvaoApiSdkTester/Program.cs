@@ -38,7 +38,7 @@ app.AddCommand("atcnow-multi", async ([FromService] ITrackerApi tracker) =>
 });
 
 app.AddCommand("atc-bookings", async ([FromService] IAtcBookingsApi atcSchedulingApi)
-    => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: new DateTime(2024, 03, 11)));
+    => await atcSchedulingApi.GetDailyAtcSchedules(icaoFilter: "li", date: DateTime.Now));
 
 app.AddSubCommand("tracker", a =>
 {
