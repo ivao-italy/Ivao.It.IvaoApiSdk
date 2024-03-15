@@ -48,19 +48,21 @@ internal class DefaultAuthenticator : IAuthenticator
         }
 
         //Get a fresh one
+        var req = AuthRequest.FromConfig(config.Value);
+
 #if NET8_0_OR_GREATER
         JsonSerializerOptions o = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 #else
-        JsonSerializerOptions o = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        JsonSerializerOptions o = JsonSerializerOptions.Default;
 #endif
 
-        var req = AuthRequest.FromConfig(config.Value);
         var response = await client.PostAsJsonAsync(
             DefaultTokenEndpoint, 
             req,
             o, 
             cancellation);
-        
+
+
         //request.EnsureSuccessStatusCode(); //TODO Better handling?
         if (response.StatusCode >= HttpStatusCode.BadRequest)
         {

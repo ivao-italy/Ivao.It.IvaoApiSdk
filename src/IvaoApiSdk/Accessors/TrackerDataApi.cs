@@ -126,10 +126,7 @@ internal class TrackerApi : BaseAccessor, ITrackerApi
         var tracks = await GetSessionTracks(sessionId, cancellation);
         var fpls = await GetSessionFlightPlans(sessionId, cancellation);
 
-        fpls?.ForEach(f =>
-        {
-            f.Callsign = session.Callsign;
-        });
+        fpls?.ForEach(f => f.Callsign = session.Callsign);
 
         return new SessionDto { Session = session, Tracks = tracks, FlightPlans = fpls };
     }

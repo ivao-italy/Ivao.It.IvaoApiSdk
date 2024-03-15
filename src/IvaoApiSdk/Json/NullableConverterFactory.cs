@@ -11,11 +11,7 @@ public class NullableConverterFactory : JsonConverterFactory
 
     public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
     {
-        var t = Nullable.GetUnderlyingType(type);
-        if (t is null)
-        {
-            throw new JsonException($"Unable to convert type: {type}");
-        }
+        var t = Nullable.GetUnderlyingType(type) ?? throw new JsonException($"Unable to convert type: {type}");
 
         var instance = Activator.CreateInstance(
             typeof(NullableConverter<>).MakeGenericType(new Type[] { t! }),
@@ -23,13 +19,8 @@ public class NullableConverterFactory : JsonConverterFactory
             binder: null,
             args: new object[] { options },
             culture: null);
-        if (instance is null)
-        {
-            throw new JsonException($"Unable to convert type: {type}");
-        }
-
-        return (JsonConverter)instance!;
-
+        
+        return instance is null ? throw new JsonException($"Unable to convert type: {type}") : (JsonConverter)instance;
     }
 
     class NullableConverter<T> : JsonConverter<T?> where T : struct

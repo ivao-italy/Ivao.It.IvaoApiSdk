@@ -11,8 +11,20 @@ internal interface ITimedRunner
     Task<T> Run<T>(Func<Task<T>> function);
 }
 
+#if NET8_0_OR_GREATER
 internal class TimedRunner(ILogger<TimedRunner> logger) : ITimedRunner
 {
+#else
+internal class TimedRunner : ITimedRunner
+{
+    private readonly ILogger<TimedRunner> logger;
+
+    public TimedRunner(ILogger<TimedRunner> logger)
+    {
+        this.logger = logger;
+    }
+#endif
+
     private readonly Stopwatch _stopwatch = new();
 
     public string? Label { get; private set; }
