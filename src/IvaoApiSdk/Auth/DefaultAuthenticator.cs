@@ -10,11 +10,29 @@ using Microsoft.Extensions.Options;
 
 namespace Ivao.It.IvaoApiSdk.Auth;
 
+#if NET8_0_OR_GREATER
 internal class DefaultAuthenticator(
     IOptions<IvaoApiConfig> config,
     HttpClient client,
     ILogger<DefaultAuthenticator> logger) : IAuthenticator
 {
+#else
+internal class DefaultAuthenticator : IAuthenticator
+{
+    private readonly IOptions<IvaoApiConfig> config;
+    private readonly HttpClient client;
+    private readonly ILogger<DefaultAuthenticator> logger;
+
+    public DefaultAuthenticator(
+        IOptions<IvaoApiConfig> config,
+        HttpClient client,
+        ILogger<DefaultAuthenticator> logger)
+    {
+        this.config = config;
+        this.client = client;
+        this.logger = logger;
+    }
+#endif
     private const string DefaultTokenEndpoint = @"v2/oauth/token";
 
     
@@ -30,7 +48,11 @@ internal class DefaultAuthenticator(
         }
 
         //Get a fresh one
+#if NET8_0_OR_GREATER
         JsonSerializerOptions o = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
+#else
+        JsonSerializerOptions o = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+#endif
 
         var req = AuthRequest.FromConfig(config.Value);
         var response = await client.PostAsJsonAsync(

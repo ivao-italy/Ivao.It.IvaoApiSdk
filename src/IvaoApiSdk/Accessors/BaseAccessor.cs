@@ -3,8 +3,20 @@ using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Ivao.It.IvaoApiSdk.Accessors;
+
+#if NET8_0_OR_GREATER
 internal class BaseAccessor(ILogger logger)
 {
+#else
+internal class BaseAccessor
+{
+    private readonly ILogger logger;
+    public BaseAccessor(ILogger logger)
+    {
+        this.logger = logger;
+    }
+#endif
+
     protected async Task RunApiCall(Func<Task<HttpResponseMessage>> callDelegate, string route)
     {
         logger.LogDebug("Calling {route}", route);

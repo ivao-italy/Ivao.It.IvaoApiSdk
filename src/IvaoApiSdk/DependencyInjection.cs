@@ -18,7 +18,7 @@ public static class DependencyInjection
     {
         //Config IOptions
         services.Configure<IvaoApiConfig>(config.GetRequiredSection(IvaoApiConfig.SectionName));
-
+        
         //Basic HTTP Clients Config
         Action<HttpClient> configAction = cfg =>
         {

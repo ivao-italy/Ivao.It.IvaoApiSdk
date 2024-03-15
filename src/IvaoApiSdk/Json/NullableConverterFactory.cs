@@ -9,11 +9,28 @@ public class NullableConverterFactory : JsonConverterFactory
 
     public override bool CanConvert(Type typeToConvert) => Nullable.GetUnderlyingType(typeToConvert) != null;
 
-    public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options) =>
-        (JsonConverter)Activator.CreateInstance(typeof(NullableConverter<>).MakeGenericType(new Type[] { Nullable.GetUnderlyingType(type) }), BindingFlags.Instance | BindingFlags.Public,
+    public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
+    {
+        var t = Nullable.GetUnderlyingType(type);
+        if (t is null)
+        {
+            throw new JsonException($"Unable to convert type: {type}");
+        }
+
+        var instance = Activator.CreateInstance(
+            typeof(NullableConverter<>).MakeGenericType(new Type[] { t! }),
+            BindingFlags.Instance | BindingFlags.Public,
             binder: null,
             args: new object[] { options },
             culture: null);
+        if (instance is null)
+        {
+            throw new JsonException($"Unable to convert type: {type}");
+        }
+
+        return (JsonConverter)instance!;
+
+    }
 
     class NullableConverter<T> : JsonConverter<T?> where T : struct
     {
@@ -32,6 +49,6 @@ public class NullableConverterFactory : JsonConverterFactory
         }
 
         public override void Write(Utf8JsonWriter writer, T? value, JsonSerializerOptions options) =>
-            JsonSerializer.Serialize(writer, value.Value, options);
+            JsonSerializer.Serialize(writer, value!.Value, options);
     }
 }

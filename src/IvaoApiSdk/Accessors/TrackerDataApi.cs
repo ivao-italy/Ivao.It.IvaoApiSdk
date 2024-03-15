@@ -9,12 +9,28 @@ using Microsoft.Extensions.Logging;
 
 namespace Ivao.It.IvaoApiSdk.Accessors;
 
+#if NET8_0_OR_GREATER
 internal class TrackerApi(
     IAuthenticator authenticator,
     ILogger<TrackerApi> logger,
     HttpClient client)
     : BaseAccessor(logger), ITrackerApi
 {
+#else
+internal class TrackerApi : BaseAccessor, ITrackerApi
+{
+    private readonly IAuthenticator authenticator;
+    private readonly HttpClient client;
+    public TrackerApi(IAuthenticator authenticator,
+        ILogger<TrackerApi> logger,
+        HttpClient client) 
+        : base(logger)
+    {
+        this.authenticator = authenticator;
+        this.client = client;
+    }
+#endif
+
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
