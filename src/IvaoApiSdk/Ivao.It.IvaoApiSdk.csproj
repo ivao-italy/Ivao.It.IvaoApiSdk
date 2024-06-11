@@ -10,7 +10,18 @@
     <Company>Ivao Italy Division</Company>
     <Description>An Ivao Api SDK to query IVAO data on exposed public APIs</Description>
     <Copyright>2024 © Emiliano Innocenti</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ivao-italy/Ivao.It.IvaoApiSdk</RepositoryUrl>
+    <PackageOutputPath>D:\NuGetPackages</PackageOutputPath>
+      
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
