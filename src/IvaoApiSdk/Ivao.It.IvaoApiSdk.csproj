@@ -4,6 +4,12 @@
     <TargetFrameworks>net8.0;net7.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version>1.0.0-beta</Version>
+    <Title>Ivao Api SDK</Title>
+    <Authors>IT-WM Emiliano Innocenti</Authors>
+    <Company>Ivao Italy Division</Company>
+    <Description>An Ivao Api SDK to query IVAO data on exposed public APIs</Description>
+    <Copyright>2024 © Emiliano Innocenti</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
