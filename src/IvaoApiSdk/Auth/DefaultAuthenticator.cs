@@ -63,7 +63,6 @@ internal class DefaultAuthenticator : IAuthenticator
             cancellation);
 
 
-        //request.EnsureSuccessStatusCode(); //TODO Better handling?
         if (response.StatusCode >= HttpStatusCode.BadRequest)
         {
             var cont = await response.Content.ReadAsStringAsync(cancellation);
