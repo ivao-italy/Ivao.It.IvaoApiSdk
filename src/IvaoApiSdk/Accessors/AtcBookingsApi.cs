@@ -55,7 +55,7 @@ internal class AtcBookingsApi : BaseAccessor, IAtcBookingsApi
         if (icaoFilter is not null)
         {
             data = data?
-                .Where(d => d.AtcPosition?.StartsWith(icaoFilter, StringComparison.OrdinalIgnoreCase) ?? false)
+                .Where(d => d.AtcCallsign?.StartsWith(icaoFilter, StringComparison.OrdinalIgnoreCase) ?? false)
                 .ToList();
         }
 
