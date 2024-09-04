@@ -47,7 +47,7 @@ app.AddSubCommand("tracker", a =>
 
     a.AddCommand("fpl", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionFlightPlans(54989210));
     a.AddCommand("tracks", async ([FromService] ITrackerApi tracker) => await tracker.GetSessionTracks(54989210));
-    
+
     a.AddCommand("full", async ([FromService] ITrackerApi tracker, [FromService] ITimedRunner runner) =>
     {
         await runner
@@ -56,6 +56,12 @@ app.AddSubCommand("tracker", a =>
             //.Run(async () => await tracker.GetFullSessionData(55007150)); //Emi BLQ-VLC
             .Run(async () => await tracker.GetFullSessionData(55006106)); //Pascu LHR-FCO
     });
+});
+
+app.AddCommand("fras", async ([FromService] ICoreApi coreApi) =>
+{
+    var fras = await coreApi.GetAllFras("LI", default);
+    Console.WriteLine($"Fra count: {fras.Count}");
 });
 
 app.Run();

@@ -34,10 +34,12 @@ public static class DependencyInjection
         //Typed HttpClients
         services.AddHttpClient<ITrackerApi, TrackerApi>(configAction);
         services.AddHttpClient<IAtcBookingsApi, AtcBookingsApi>(configAction);
+        services.AddHttpClient<ICoreApi, CoreApi>(configAction);
 
         //Api accessor services
         services.TryAddTransient<ITrackerApi, TrackerApi>();
         services.TryAddTransient<IAtcBookingsApi, AtcBookingsApi>();
+        services.TryAddTransient<ICoreApi, CoreApi>();
 
         return services;
     }

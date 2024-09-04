@@ -31,6 +31,10 @@
     "tracker fpl": {
       "commandName": "Project",
       "commandLineArgs": "tracker fpl"
+    },
+    "fras": {
+      "commandName": "Project",
+      "commandLineArgs": "fras"
     }
   }
 }

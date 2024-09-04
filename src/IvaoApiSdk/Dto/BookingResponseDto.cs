@@ -36,6 +36,7 @@ public class AtcPositionDto
     public long Id { get; set; }
     public string AirportId { get; set; } = null!;
     public string AtcCallsign { get; set; } = null!;
+    public string? MiddleIdentifier  { get; set; }
     public bool Military { get; set; }
     public double Frequency { get; set; }
     public string ComposePosition { get; set; } = null!;
